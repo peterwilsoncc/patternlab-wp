@@ -1,6 +1,13 @@
 <?php
 namespace PatternLabWP\LocatePatterns;
 
+/**
+ * Generates a dictionary of patterns against their file names
+ *
+ * The dictionary is based of the Pattern Lab method of term-pattern.
+ *
+ * @TODO caching.
+ */
 function pattern_dictionary() {
 	// Editions are in least to most imporant.
 	$editions = array(
