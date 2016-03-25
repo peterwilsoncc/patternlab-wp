@@ -9,3 +9,6 @@ if ( ! class_exists( 'Mustache_Engine' ) ) {
 	// Source: https://vip-svn.wordpress.com/plugins/lib/Mustache/
 	include __DIR__ . '/lib/Mustache/0-load.php';
 }
+
+define( 'PATTERNLABWP_DEFAULTS', __DIR__ . '/_patterns' );
+include __DIR__ . '/lib/locate-patterns.php';
