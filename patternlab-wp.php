@@ -7,5 +7,5 @@ if ( ! class_exists( 'Mustache_Engine' ) ) {
 	// to include any hard coded modifications WPVIP may have made to
 	// improve the security of the library.
 	// Source: https://vip-svn.wordpress.com/plugins/lib/Mustache/
-	include 'lib/Mustache/0-load.php';
+	include __DIR__ . '/lib/Mustache/0-load.php';
 }
