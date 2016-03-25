@@ -16,7 +16,11 @@ function pattern_dictionary() {
 		STYLESHEETPATH . '/_patterns',
 	);
 	
-	$dictionary = array();
+	static $dictionary = array();
+	if ( ! empty( $dictionary ) ) {
+		// Dictionary already generated on this run.
+		return $dictionary;
+	}
 	
 	foreach ( $editions as $edition ) {
 		if ( ! is_dir( $edition ) ) {
