@@ -102,3 +102,17 @@ function locate_pattern($pattern_names, $load = false, $require_once = true ) {
 
 	return $located;
 }
+
+function get_pattern_part( $pattern, $name = null ) {
+
+	$patterns = array();
+
+	$name = (string) $name;
+
+	if ( '' !== $name )
+		$patterns[] = "{$pattern}-{$name}";
+
+	$patterns[] = "{$pattern}";
+
+	locate_pattern($patterns, true, false);
+}
