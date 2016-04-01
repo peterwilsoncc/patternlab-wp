@@ -75,3 +75,22 @@ function term_patterns( $term, $term_path ) {
 	return $dictionary;
 }
 
+function locate_pattern($pattern_names, $load = false, $require_once = true ) {
+	$located = '';
+	foreach ( (array) $pattern_names as $pattern_name ) {
+		if ( ! $pattern_name ) {
+			continue;
+		}
+		$file = pattern_dictionary()[ $pattern_name ];
+		if ( file_exists( $file ) ) {
+			$located = $file;
+			break;
+		}
+	}
+
+	if ( $load && '' != $located ) {
+		load_template( $located, $require_once );
+	}
+
+	return $located;
+}
