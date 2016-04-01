@@ -60,6 +60,11 @@ function term_patterns( $term, $term_path ) {
 	$patterns = scandir( $term_path );
 	$patterns = array_diff( $patterns, array( '.', '..' ) );
 	
+	$sub_term = basename( $term_path );
+	preg_match( '/(_?)(\d+-)?([\w-]+?)s?\b/', $sub_term, $matches );
+	$sub_term = $matches[3];
+	
+	
 	foreach ( $patterns as $pattern ) {
 		$pattern_path = $term_path . "/$pattern";
 		if ( is_dir( $pattern_path ) ) {
@@ -67,9 +72,12 @@ function term_patterns( $term, $term_path ) {
 			continue;
 		}
 		// It's a file
-		preg_match( '/(_?)(\d+-)?([\w-]+?)(.php|.mustache)?\b/', $pattern, $matches );
+		preg_match( '/(_?)(\d+-)?([\w-]+?)s?(.php|.mustache)?\b/', $pattern, $matches );
 		$pattern = $matches[3];
-		$dictionary[ $term . '-' . $pattern ] = $pattern_path;
+		$dictionary[ $term . '-' . $pattern ] = array( 
+			'file'     => $pattern_path,
+			'sub_term' => $sub_term,
+		);
 	}
 	
 	return $dictionary;
@@ -81,7 +89,7 @@ function locate_pattern($pattern_names, $load = false, $require_once = true ) {
 		if ( ! $pattern_name ) {
 			continue;
 		}
-		$file = pattern_dictionary()[ $pattern_name ];
+		$file = pattern_dictionary()[ $pattern_name ]['file'];
 		if ( file_exists( $file ) ) {
 			$located = $file;
 			break;
