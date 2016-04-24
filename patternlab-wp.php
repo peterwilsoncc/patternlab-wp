@@ -11,4 +11,5 @@ if ( ! class_exists( 'Mustache_Engine' ) ) {
 }
 
 define( 'PATTERNLABWP_DEFAULTS', __DIR__ . '/_patterns' );
+include __DIR__ . '/lib/PatternLoader.php';
 include __DIR__ . '/lib/locate-patterns.php';
