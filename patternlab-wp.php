@@ -52,3 +52,16 @@ function get_pattern_directory() {
 	$build_directory = apply_filters( 'pwcc_patternlab_build', $build_directory );
 	return untrailingslashit( $build_directory ) . '/';
 }
+
+/**
+ * Wrapper for get_template_part for use with pattern files.
+ *
+ * Loads either source or build version of files depending on the version
+ * of the site been loaded. Prepends the relevent path before calling
+ * get_template_part.
+ */
+function get_pattern_part( $slug, $name = null ) {
+	$slug = untrailingslashit( get_pattern_directory() ) . '/' . $slug;
+
+	get_template_part( $slug, $name );
+}
