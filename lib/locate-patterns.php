@@ -72,7 +72,7 @@ function term_patterns( $term, $term_path ) {
 			continue;
 		}
 		// It's a file
-		preg_match( '/(_?)(\d+-)?([\w-]+?)s?(.php|.mustache)?\b/', $pattern, $matches );
+		preg_match( '/(_?)(\d+-)?([\w-]+)(.php|.mustache)?\b/', $pattern, $matches );
 		$pattern = $matches[3];
 		$dictionary[ $term . '-' . $pattern ] = array( 
 			'file'     => $pattern_path,
@@ -96,8 +96,13 @@ function locate_pattern($pattern_names, $load = false, $require_once = true ) {
 		}
 	}
 
-	if ( $load && '' != $located ) {
+	$ext = pathinfo($located, PATHINFO_EXTENSION); 
+	
+	if ( $load && '' != $located && 'php' === $ext ) {
 		load_template( $located, $require_once );
+	}
+	elseif ( $load && '' != $located && 'mustache' === $ext ) {
+		load_mustache_template( $pattern_name );
 	}
 
 	return $located;
@@ -115,4 +120,17 @@ function get_pattern_part( $pattern, $name = null ) {
 	$patterns[] = "{$pattern}";
 
 	locate_pattern($patterns, true, false);
+}
+
+function load_mustache_template( $pattern_name ) {
+	global $post;
+
+	$mustache = new \Mustache_Engine( array(
+		'helpers' => array(
+			'data' => new \PWCCRM_Post( $post ),
+		),
+		'loader' => new \Mustache_Loader_PatternLoader(),
+	) );
+	
+	echo $mustache->render( $pattern_name );
 }
