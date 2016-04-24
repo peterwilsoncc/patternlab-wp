@@ -1,6 +1,8 @@
 <?php
 namespace PWCC\PatternLabWP;
 
+include_once( __DIR__ . '/inc/rewrites.php' );
+
 /**
  * Return either source or build directory for pattern library.
  */
